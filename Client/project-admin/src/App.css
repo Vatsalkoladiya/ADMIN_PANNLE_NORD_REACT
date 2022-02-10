@@ -1,0 +1,75 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+}
+.header {
+  height: 10vh;
+  background-color: black;
+  color: white;
+  font-size: 22px;
+  font-weight: 700;
+  display: flex;
+  /* align-items: center; */
+}
+.main {
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* align-items: center; */
+}
+.footer {
+  height: 10vh;
+  background-color: black;
+  color: white;
+  font-size: 22px;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+.header_main {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  
+}
+.header_sub_main {
+  position: absolute;
+  left: 0;
+  height: 100vh;
+  width: 250px;
+}
+.header_sub_main ul {
+  height: 94vh;
+}
+.header_sub_main li {
+  margin: 0 !important;
+}
+.validation {
+  color: red;
+}
+.action_button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.action_button button {
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    cursor: pointer;
+}
+.edit{
+  background-color: lightblue;
+}
+.delete{
+  background-color: rgb(240, 128, 128);
+}
