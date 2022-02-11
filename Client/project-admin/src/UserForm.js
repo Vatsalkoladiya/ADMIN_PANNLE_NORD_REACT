@@ -2,11 +2,13 @@ import React, { useEffect } from "react";
 import { MailOutlined, MobileOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Card, Col, Input, Radio, Form, Row } from "antd";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 // import  from "antd/lib/form/Form";
 
 const UserForm = (props) => {
-  const params = useParams();
+  const data = props?.location?.pathname;
+  const myArray = data.split("/");
+  let history = useHistory();
   const [errors, setErrors] = React.useState({});
   const [allData, setAllData] = React.useState({
     firstName: "",
@@ -16,18 +18,18 @@ const UserForm = (props) => {
     mobile: "",
     gender: "",
     password: "",
+    rollpermission: "ADMIN",
   });
 
   useEffect(() => {
-    console.log("params----->", params.id);
     getUpdatedData();
   }, []);
 
   const getUpdatedData = async () => {
-    if (params.id) {
+    if (myArray[2]) {
       const data = await axios.get("http://localhost:5000/getuser");
       console.log("updatedgetData----->", data);
-      const USER_DATA = data.data.filter((val) => val._id == params.id);
+      const USER_DATA = data.data.filter((val) => val._id === myArray[2]);
       console.log("USER_DATA", USER_DATA);
       USER_DATA.map((value) => {
         return setAllData({
@@ -37,7 +39,8 @@ const UserForm = (props) => {
           email: value.email,
           mobile: value.mobile,
           gender: value.gender,
-          password: value.password,
+          rollpermission: value.rollpermission,
+          password: "",
         });
       });
     }
@@ -60,6 +63,7 @@ const UserForm = (props) => {
     }
     setAllData({ ...allData, [name]: value });
   };
+
   const validation = (name, value) => {
     const emailRegx = /^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/gi;
     const mobile = /^(\+\d{1,3}[- ]?)?\d{10}$/;
@@ -106,6 +110,12 @@ const UserForm = (props) => {
         } else {
           return "";
         }
+      case "rollpermission":
+        if (!value) {
+          return "Please Enter Rollpermission";
+        } else {
+          return "";
+        }
       default:
         break;
     }
@@ -120,6 +130,7 @@ const UserForm = (props) => {
       mobile: allData.mobile,
       gender: allData.gender,
       password: allData.password,
+      rollpermission: allData.rollpermission,
     };
     let allErrors = {};
     Object.keys(Warn).forEach((key) => {
@@ -130,17 +141,18 @@ const UserForm = (props) => {
     });
     if (Object.keys(allErrors).length) return setErrors(allErrors);
     console.log("allData", allData);
-    if (params.id) {
+    if (myArray[2]) {
       const data = await axios.get("http://localhost:5000/getuser");
       console.log("updatedgetData----->", data);
-      const USER_DATA = data.data.filter((val) => val._id == params.id);
+      const USER_DATA = data.data.filter((val) => val._id === myArray[2]);
       USER_DATA[0] = allData;
       console.log("USER_DATA", USER_DATA);
       const updatedData = await axios.put(
-        `http://localhost:5000/updateuser/${params.id}`,
+        `http://localhost:5000/updateuser/${myArray[2]}`,
         USER_DATA[0]
       );
       console.log("UpdatedData----->>>", updatedData);
+      history.push("/login");
       setAllData({});
     } else {
       const data = await axios.post(
@@ -148,6 +160,7 @@ const UserForm = (props) => {
         allData
       );
       console.log("CreateUser--->", data);
+      history.push("/login");
       setAllData({});
     }
   };
@@ -167,8 +180,10 @@ const UserForm = (props) => {
           <Col span={8} />
           <Col span={8}>
             <Card className="cardtop">
-              <h1 className="h2login">Register</h1>
-              <p>
+              <h4 className="h2login" style={{ textAlign: "center" }}>
+                REGISTER
+              </h4>
+              <p style={{ textAlign: "center" }}>
                 <b>Create your account</b>
               </p>
               <Form>
@@ -251,6 +266,24 @@ const UserForm = (props) => {
                   <Radio value="Other">Other</Radio>
                 </Radio.Group>
                 <span className="validation">{errors.gender}</span>
+                <h3 style={{ marginTop: "10px" }}>Rollpermission</h3>
+                <select
+                  name="rollpermission"
+                  id="rollpermission"
+                  value={allData.rollpermission}
+                  onChange={(event) =>
+                    handleChange({
+                      target: {
+                        name: "rollpermission",
+                        value: event.target.value,
+                      },
+                    })
+                  }
+                >
+                  <option>ADMIN</option>
+                  <option>USER</option>
+                </select>
+                <span className="validation">{errors.rollpermission}</span>
                 <Form.Item style={{ margin: "10px 0px" }}>
                   <Button
                     className="btn-md buttonsubmitlogin"
@@ -259,7 +292,7 @@ const UserForm = (props) => {
                     size={"large"}
                     onClick={handleSubmit}
                   >
-                    {params.id ? "UpdateData" : "Create Account"}
+                    {myArray[2] ? "UpdateData" : "Create Account"}
                   </Button>
                 </Form.Item>
               </Form>

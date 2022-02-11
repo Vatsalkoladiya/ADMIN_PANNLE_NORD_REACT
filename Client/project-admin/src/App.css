@@ -73,3 +73,26 @@
 .delete{
   background-color: rgb(240, 128, 128);
 }
+select{
+  width: 100%;
+  padding: 4px 11px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+.ant-table-thead > tr > th {
+    position: relative;
+    color: rgba(0, 0, 0, 0.85);
+    font-weight: 500;
+    text-align: center !important;
+    background: #fafafa;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background 0.3s ease;
+}
+.ant-table-tbody > tr > td {
+    border-bottom: 1px solid #f0f0f0;
+    transition: background 0.3s;
+    text-align: center;
+}

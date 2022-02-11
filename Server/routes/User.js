@@ -4,11 +4,12 @@ import {
   createUser,
   deleteUser,
   updateUser,
+  loginuser,
 } from "../controllers/User";
 
 const routes = express.Router();
 
-
+routes.post('/loginuser', loginuser);
 routes.get("/getuser", getUserDetails);
 routes.post("/createuser", createUser);
 routes.delete('/deleteuser/:id', deleteUser);

@@ -1,7 +1,7 @@
-import { Table } from "antd";
+import { Table, Pagination } from "antd";
 import axios from "axios";
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const UserDetails = () => {
   const [data, setData] = React.useState([]);
@@ -22,7 +22,7 @@ const UserDetails = () => {
   React.useEffect(() => {
     getData();
   }, []);
-  const navigate = useNavigate();
+  const history = useHistory();
 
   const handleDelete = async (id) => {
     console.log("deleteUser=====>", id);
@@ -32,7 +32,7 @@ const UserDetails = () => {
   };
 
   const handleUpdate = async (id) => {
-    navigate(`/userform/${id}`);
+    history.push(`/userform/${id}`);
   };
   const columns = [
     {
@@ -66,9 +66,9 @@ const UserDetails = () => {
       key: "gender",
     },
     {
-      title: "Password",
-      dataIndex: "password",
-      key: "password",
+      title: "Rollpermission",
+      dataIndex: "rollpermission",
+      key: "rollpermission",
     },
     {
       title: "Action",
@@ -104,7 +104,13 @@ const UserDetails = () => {
           alignItems: "center",
         }}
       >
-        <Table dataSource={data} columns={columns} />;
+        <Table
+          style={{textAlign:"center"}}
+          dataSource={data}
+          columns={columns}
+          pagination={{ pageSize: 5 }}
+        />
+        ;
       </div>
     </>
   );

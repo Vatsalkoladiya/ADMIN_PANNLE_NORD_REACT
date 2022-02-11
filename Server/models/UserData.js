@@ -8,8 +8,10 @@ const userSchema = mongoose.Schema({
   mobile: String,
   password: String,
   gender: String,
+  rollpermission: String,
+  accesstoken: String,
 });
 
 const UserData = mongoose.model("UserData", userSchema);
 
-export default UserData
+export default UserData;

@@ -1,21 +1,22 @@
 import React from "react";
 import Logo from "./Images/download (1).png";
 import { Menu, Button } from "antd";
-import { useNavigate } from "react-router";
+import { useHistory } from "react-router-dom";
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
   PieChartOutlined,
   DesktopOutlined,
   ContainerOutlined,
+  LoginOutlined,
 } from "@ant-design/icons";
 import UserForm from "./UserForm";
 import UserDetails from "./UserDetails";
 const Header = (page, setPage) => {
-  let navigate = useNavigate();
-  const handleClick = (one) =>{
-    navigate(one);
-  }
+  let history = useHistory();
+  const handleClick = (one) => {
+    history.push(one);
+  };
   const [collapsed, setCollapsed] = React.useState(true);
   // const [route, setRoute] = React.useState(false);
   const toggleCollapsed = () => {
@@ -42,13 +43,32 @@ const Header = (page, setPage) => {
             theme="dark"
             inlineCollapsed={collapsed}
           >
-            <Menu.Item key="1" icon={<PieChartOutlined />} onClick={() => {handleClick('/userform')}}>
-              USER-FORM
+            <Menu.Item
+              key="1"
+              icon={<PieChartOutlined />}
+              onClick={() => {
+                handleClick("/userform");
+              }}
+            >
+              REGISTER
             </Menu.Item>
-            <Menu.Item key="2" icon={<DesktopOutlined />} onClick={() => {handleClick('/userdetails')}}>
+            <Menu.Item
+              key="2"
+              icon={<LoginOutlined />}
+              onClick={() => handleClick("/login")}
+            >
+              LOGIN
+            </Menu.Item>
+            <Menu.Item
+              key="3"
+              icon={<DesktopOutlined />}
+              onClick={() => {
+                handleClick("/userdetails");
+              }}
+            >
               USER-DETAILS
             </Menu.Item>
-            <Menu.Item key="3" icon={<ContainerOutlined />}>
+            <Menu.Item key="4" icon={<ContainerOutlined />}>
               USER-PROFILE
             </Menu.Item>
           </Menu>
