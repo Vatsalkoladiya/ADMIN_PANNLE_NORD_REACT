@@ -20,7 +20,7 @@ const Login = () => {
 
   const handleSubmit = async () => {
     const data = await axios.post("http://localhost:5000/loginuser", allData);
-    localStorage.setItem("TOKEN", JSON.stringify(data.data.accessToken));
+    localStorage.setItem("TOKEN", JSON.stringify(data.data.accesstoken));
     console.log("loginData--->", data);
     history.push("/userdetails");
     setAllData({});

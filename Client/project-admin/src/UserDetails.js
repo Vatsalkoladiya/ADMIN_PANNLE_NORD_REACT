@@ -1,10 +1,12 @@
-import { Table, Pagination } from "antd";
+import { Table } from "antd";
 import axios from "axios";
 import React from "react";
 import { useHistory } from "react-router-dom";
 
 const UserDetails = () => {
   const [data, setData] = React.useState([]);
+  let local = JSON.parse(localStorage.getItem("TOKEN"));
+  console.log("local", local);
   const getData = async () => {
     const data = await axios.get("http://localhost:5000/getuser");
     console.log("res--->", data);
@@ -19,8 +21,21 @@ const UserDetails = () => {
     //     console.log("err------>", err);
     //   });
   };
+
+  const getDataWithToken = async () => {
+    const res = await axios.get(`http://localhost:5000/getuser/:${local}`);
+    console.log("res--->", typeof(res));
+    let dataOne = [];
+    if (typeof(res.data) == "object") {
+      dataOne.push(res.data);
+      setData(dataOne);
+    } else {
+      setData(res.data);
+    }
+  };
   React.useEffect(() => {
-    getData();
+    getDataWithToken();
+    // getData();
   }, []);
   const history = useHistory();
 
@@ -105,7 +120,7 @@ const UserDetails = () => {
         }}
       >
         <Table
-          style={{textAlign:"center"}}
+          style={{ textAlign: "center" }}
           dataSource={data}
           columns={columns}
           pagination={{ pageSize: 5 }}

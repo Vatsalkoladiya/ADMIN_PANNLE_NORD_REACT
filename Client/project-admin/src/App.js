@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import User from "./User";
+import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
 import "antd/dist/antd.css";
@@ -7,21 +6,21 @@ import UserForm from "./UserForm";
 import UserDetails from "./UserDetails";
 import Header from "./Header";
 import Login from "./Login";
-import PublicRoute from "./PublicRoute";
 import PrivetRoute from "./PrivetRoute";
+import UserCheckIn from "./UserCheckIn";
 
 const App = (props) => {
-  useEffect(() => {
-    console.log("props1111111111------->", props);
-  }, []);
+  // useEffect(() => {
+  //   console.log("props1111111111------->", props);
+  // }, []);
   return (
     <>
-          <BrowserRouter>
-      <div className="header">
-        <Header />
-      </div>
-      <div className="container">
-        <div className="main">
+      <BrowserRouter>
+        <div className="header">
+          <Header />
+        </div>
+        <div className="container">
+          <div className="main">
             <Switch {...props}>
               <Route path="/" exact component={UserForm} />
               <Route
@@ -46,11 +45,16 @@ const App = (props) => {
                 component={UserDetails}
                 // exact
               />
+              <PrivetRoute
+                path="/usercheckin-out"
+                component={UserCheckIn}
+                // exact
+              />
             </Switch>
+          </div>
         </div>
-      </div>
-      <div className="footer">FOOTER</div>
-          </BrowserRouter>
+        <div className="footer">FOOTER</div>
+      </BrowserRouter>
     </>
   );
 };

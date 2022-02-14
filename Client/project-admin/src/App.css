@@ -96,3 +96,16 @@ select{
     transition: background 0.3s;
     text-align: center;
 }
+.checkIn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px;
+}
+.checkInButton{
+  margin-right: 20px;
+}
+.checkinTable .ant-table-thead > tr > th {
+  width: 200px;
+}

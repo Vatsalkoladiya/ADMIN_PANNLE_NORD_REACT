@@ -159,8 +159,12 @@ const UserForm = (props) => {
         "http://localhost:5000/createuser",
         allData
       );
-      console.log("CreateUser--->", data);
-      history.push("/login");
+      if (data.status === 200) {
+        alert(data.data);
+      } else {
+        console.log("CreateUser--->", data);
+        history.push("/login");
+      }
       setAllData({});
     }
   };
@@ -181,10 +185,12 @@ const UserForm = (props) => {
           <Col span={8}>
             <Card className="cardtop">
               <h4 className="h2login" style={{ textAlign: "center" }}>
-                REGISTER
+                {myArray[2] ? "UPDATE" : "REGISTER"}
               </h4>
               <p style={{ textAlign: "center" }}>
-                <b>Create your account</b>
+                <b>
+                  {myArray[2] ? "Update Your Account" : "Create Your Account"}
+                </b>
               </p>
               <Form>
                 <Form.Item>

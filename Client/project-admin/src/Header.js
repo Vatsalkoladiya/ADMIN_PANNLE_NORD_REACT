@@ -7,12 +7,10 @@ import {
   MenuFoldOutlined,
   PieChartOutlined,
   DesktopOutlined,
-  ContainerOutlined,
   LoginOutlined,
+  CheckCircleOutlined,
 } from "@ant-design/icons";
-import UserForm from "./UserForm";
-import UserDetails from "./UserDetails";
-const Header = (page, setPage) => {
+const Header = () => {
   let history = useHistory();
   const handleClick = (one) => {
     history.push(one);
@@ -68,8 +66,12 @@ const Header = (page, setPage) => {
             >
               USER-DETAILS
             </Menu.Item>
-            <Menu.Item key="4" icon={<ContainerOutlined />}>
-              USER-PROFILE
+            <Menu.Item
+              key="4"
+              icon={<CheckCircleOutlined />}
+              onClick={() => handleClick("/usercheckin-out")}
+            >
+              USER-CHECK IN-OUT
             </Menu.Item>
           </Menu>
         </div>
