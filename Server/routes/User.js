@@ -9,7 +9,7 @@ import {
   userCheckIn,
   userCheckOut,
   getUserCheckIn,
-  // getUserCheckOut,
+  getUserCheckOut,
 } from "../controllers/User";
 
 const routes = express.Router();
@@ -23,5 +23,5 @@ routes.put("/updateuser/:id", updateUser);
 routes.post('/checkin', userCheckIn);
 routes.get("/getcheckin:token", getUserCheckIn);
 routes.post('/checkout', userCheckOut);
-// routes.get("/getcheckout:token", getUserCheckOut);
+routes.get("/getcheckout:token", getUserCheckOut);
 export default routes;

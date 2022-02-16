@@ -129,28 +129,31 @@ export const userCheckOut = async (req, res) => {
   if (!userToken) {
     return res.status(200).json("User not found");
   }
+  // const id = userToken._id;
+  //   if (!mongoose.Types.ObjectId.isValid(id))
+  //     return res.status(404).send("No post with that id");
   try {
-    req.body.dataOutObj.author = userToken._id;
-    const id = req.body.dataOutObj;
+    // req.body.dataOutObj.author = userToken._id;
+    const id = userToken._id;
     const bodydata = req.body.dataOutObj;
     console.log("bodyData", id);
-    const newUserStatus = UserStatus.findByIdAndUpdate({ _id: id },bodydata);
-    await newUserStatus.save();
+    const newUserStatus = await UserStatus.findOneAndUpdate({ author: id }, bodydata);
+    // await newUserStatus.save();
     res.status(201).json({ message: "User CheckedIn", data: newUserStatus });
   } catch (error) {
     res.status(401).json({ message: error });
   }
 };
-// export const getUserCheckOut = async (req, res) => {
-//   const token = req.params.token;
-//   const access = token.substring(1);
-//   const userData = await UserData.findOne({ accesstoken: access });
-//   console.log("user", userData);
-//   if (!userData) return res.status(201).send("User not found");
-//   try {
-//     const userSatusAll = await UserStatus.find({ author: userData._id });
-//     res.status(200).json(userSatusAll);
-//   } catch (error) {
-//     res.status(401).json({ message: error });
-//   }
-// };
+export const getUserCheckOut = async (req, res) => {
+  const token = req.params.token;
+  const access = token.substring(1);
+  const userData = await UserData.findOne({ accesstoken: access });
+  console.log("user", userData);
+  if (!userData) return res.status(201).send("User not found");
+  try {
+    const userSatusAll = await UserStatus.find({ author: userData._id });
+    res.status(200).json(userSatusAll);
+  } catch (error) {
+    res.status(401).json({ message: error });
+  }
+};
